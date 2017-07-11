@@ -67,6 +67,8 @@ def analyze(content, keyword):
     password="hN7h6o6sTnD4",
     version="2017-07-11")
 
+    # print content
+
     response = natural_language_understanding.analyze(
     text = content,
     features=[

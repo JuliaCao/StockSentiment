@@ -65,7 +65,10 @@ class Article():
 
 def get_bullets_for_ticker(tick):
     res = requests.get(SEEKING_ALPHA.format(tick), proxies=proxies)
-    # print(res)
+    if res.status_code != 200:
+        print "Trouble getting articles for {}".format(tick)
+        return []
+
     soup = Soup(res.text, "lxml")
     results = []
     for bullets in soup.findAll("li", {"class": "mc_list_li"}):
@@ -87,4 +90,4 @@ def get_articles(tickers):
     return articles
 
 if __name__ == "__main__":
-    articles = get_articles(["AAPL","AMD"])
+    articles = get_articles(["AAPL","FB"])
