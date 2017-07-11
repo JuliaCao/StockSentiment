@@ -9,20 +9,16 @@ password="hN7h6o6sTnD4",
 version="2017-07-11")
 
 response = natural_language_understanding.analyze(
-html=" \
-<html> \
-  <head><title>Fruits</title></head> \
-  <body> \
-    <h1>Apples and Oranges</h1> \
-    <p>I love apples! I don't like oranges.</p> \
-  </body> \
-</html>",
+text = "IBM is an American multinational technology company headquartered \
+    in Armonk, New York, United States, with operations in over 170 \
+    countries.",
 features=[
-Features.Emotion(
+Features.Sentiment(
   # Emotion options
-  targets=["apples","oranges"]
+  targets=["IBM"]
     )
   ]
 )
 
-print(json.dumps(response, indent=2))
+# print(json.dumps(response, indent=2))
+print response["sentiment"]["targets"][0]["score"]
