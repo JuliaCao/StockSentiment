@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, \
+from flask import Flask, current_app, request, session, g, redirect, url_for, abort, \
      render_template, flash
 
 app = Flask(__name__) # create the application instance :)
@@ -8,7 +8,7 @@ app.config.from_object(__name__) # load config from this file , flaskr.py
 
 # Load default config and override config from an environment variable
 app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'stockSentiment.db'),
+    DATABASE=os.path.join(app.root_path, 'entries.db'),
     SECRET_KEY='development key',
     USERNAME='admin',
     PASSWORD='default'
@@ -29,6 +29,12 @@ def init_db():
         db.cursor().executescript(f.read())
     db.commit()
 
+@app.cli.command('initdb')
+def initdb_command():
+    """Initializes the database."""
+    init_db()
+    print('Initialized the database.')
+
 
 def get_db():
     """Opens a new database connection if there is none yet for the
@@ -37,3 +43,17 @@ def get_db():
     if not hasattr(g, 'sqlite_db'):
         g.sqlite_db = connect_db()
     return g.sqlite_db
+
+@app.teardown_appcontext
+def close_db(error):
+    """Closes the database again at the end of the request."""
+    if hasattr(g, 'sqlite_db'):
+        g.sqlite_db.close()
+
+@app.route('/')
+def show_entries():
+    db = get_db()
+    cur = db.execute('select title, link, sentiment from entries order by id desc')
+    entries = cur.fetchall()
+    return render_template('show_entries.html', entries=entries)
+
