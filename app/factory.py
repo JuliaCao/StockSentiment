@@ -1,7 +1,9 @@
 import os
 from flask import Flask, g
 from werkzeug.utils import find_modules, import_string
-from app.blueprints.app import init_db
+import sys
+sys.path.append("/Users/Miaomiao0808/stockSentiment/app")
+from blueprints.app import init_db
 
 
 def create_app(config=None):
