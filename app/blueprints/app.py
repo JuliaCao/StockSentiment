@@ -62,6 +62,11 @@ def show_entries():
     return render_template('show_entries.html', entries=entries)
 
 def analyze(content, keyword):
+    natural_language_understanding = NaturalLanguageUnderstandingV1(
+    username="33ef4781-a0cc-4486-b186-28d5e78bdc06",
+    password="hN7h6o6sTnD4",
+    version="2017-07-11")
+
     response = natural_language_understanding.analyze(
     text = content,
     features=[
@@ -71,7 +76,7 @@ def analyze(content, keyword):
         )
       ]
     )
-    score = response["sentiment"]["targets"][0]["score"]
+    score = response["sentiment"]["document"]["score"]
     return score
 
 def insert(table, id, time, title, link, sentiment):

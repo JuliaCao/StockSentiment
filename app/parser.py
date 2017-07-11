@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as Soup
-from app.blueprints.app import analyze
+from blueprints.app import analyze
 import pandas
 import datetime
 import time
@@ -9,10 +9,12 @@ df = pandas.read_csv('secwiki_tickers.csv')
 
 SEEKING_ALPHA = "https://seekingalpha.com/symbol/{}/news"
 
-proxies = {
-    "http" : "nyc-webproxy.blackrock.com:8080",
-    "https" : "nyc-webproxy.blackrock.com:8080"
-}
+# proxies = {
+#     "http" : "nyc-webproxy.blackrock.com:8080",
+#     "https" : "nyc-webproxy.blackrock.com:8080"
+# }
+
+proxies = {}
 
 class Article():
     def __init__(self, title=None, link=None, time=None):
@@ -55,15 +57,15 @@ class Article():
         self.link = div["href"]
 
     def get_sentiment(self, text):
-        self.sentiment = analyze(text, self.company)
+        self.sentiment = analyze(''.join(text), self.ticker)
 
     def set_ticker(self, tick):
         self.ticker = tick
         self.company = list((df[df.Ticker==tick]).Name.values)[0]
 
 def get_bullets_for_ticker(tick):
-    res = requests.get("SEEKING_ALPHA.format(tick), proxies=proxies)
-    print(res)
+    res = requests.get(SEEKING_ALPHA.format(tick), proxies=proxies)
+    # print(res)
     soup = Soup(res.text, "lxml")
     results = []
     for bullets in soup.findAll("li", {"class": "mc_list_li"}):

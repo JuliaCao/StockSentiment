@@ -21,4 +21,4 @@ Features.Sentiment(
 )
 
 # print(json.dumps(response, indent=2))
-print response["sentiment"]["targets"][0]["score"]
+print response["sentiment"]["document"]["score"]
