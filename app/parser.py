@@ -60,9 +60,12 @@ class Article():
     def set_ticker(self, tick):
         self.ticker = tick
         self.company = list((df[df.Ticker==tick]).Name.values)[0]
+        
+    def to_tuple(self):
+        return (self.time,self.ticker,self.title,self.link,self.sentiment)
 
 def get_bullets_for_ticker(tick):
-    res = requests.get("SEEKING_ALPHA.format(tick), proxies=proxies)
+    res = requests.get(SEEKING_ALPHA.format(tick), proxies=proxies)
     print(res)
     soup = Soup(res.text, "lxml")
     results = []
