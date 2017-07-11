@@ -30,14 +30,12 @@ def connect_db():
     rv.row_factory = sqlite3.Row
     return rv
 
-
 def init_db():
     """Initializes the database."""
     db = get_db()
     with current_app.open_resource('schema.sql', mode='r') as f:
         db.cursor().executescript(f.read())
     db.commit()
-
 
 def get_db():
     """Opens a new database connection if there is none yet for the
@@ -60,7 +58,9 @@ def analyze(content, keyword):
     score = response["sentiment"]["targets"][0]["score"]
     return score
 
-def put_rec():
+def insert():
     db = get_db()
-    
+    cur = db.cursor()
+    cur.execute()
+
 
