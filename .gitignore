@@ -5278,3 +5278,7 @@ venv/lib/python2.7/site-packages/_cffi_backend.so
 venv/lib/python2.7/site-packages/BeautifulSoup.py
 venv/lib/python2.7/site-packages/BeautifulSoup.pyc
 venv/lib/python2.7/site-packages/BeautifulSoupTests.py
+app/parser_BACKUP_30010.py
+app/parser_BASE_30010.py
+app/parser_LOCAL_30010.py
+app/parser_REMOTE_30010.py
