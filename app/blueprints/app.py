@@ -74,8 +74,7 @@ def analyze(content, keyword):
     score = response["sentiment"]["targets"][0]["score"]
     return score
 
-def insert():
+def insert(table, id, time, title, link, sentiment):
     db = get_db()
     cur = db.cursor()
-    cur.execute()
-
+    cur.execute("INSERT INTO table VALUES (id, time, title, link, sentiment)")
