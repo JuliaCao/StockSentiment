@@ -7,7 +7,7 @@ import time
 
 df = pandas.read_csv('secwiki_tickers.csv')
 
-SEEKING_ALPHA = "https://seekingalpha.com/api/sa/combined/{}.xml"
+SEEKING_ALPHA = "https://seekingalpha.com/symbol/{}/news"
 
 proxies = {
     "http" : "nyc-webproxy.blackrock.com:8080",
@@ -62,7 +62,7 @@ class Article():
         self.company = list((df[df.Ticker==tick]).Name.values)[0]
 
 def get_bullets_for_ticker(tick):
-    res = requests.get("https://seekingalpha.com/symbol/{}/news".format(tick), proxies=proxies)
+    res = requests.get("SEEKING_ALPHA.format(tick), proxies=proxies)
     print(res)
     soup = Soup(res.text, "lxml")
     results = []
