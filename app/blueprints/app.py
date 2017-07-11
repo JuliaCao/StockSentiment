@@ -1,7 +1,11 @@
 import os
 import sqlite3
+import json
 from flask import Flask, current_app, request, session, g, redirect, url_for, abort, \
      render_template, flash
+from watson_developer_cloud import NaturalLanguageUnderstandingV1
+import watson_developer_cloud.natural_language_understanding.features.v1 \
+  as Features
 
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
@@ -56,4 +60,22 @@ def show_entries():
     cur = db.execute('select title, link, sentiment from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
+
+def analyze(content, keyword):
+    response = natural_language_understanding.analyze(
+    text = content,
+    features=[
+    Features.Sentiment(
+    # Emotion options
+    targets=[keyword]
+        )
+      ]
+    )
+    score = response["sentiment"]["targets"][0]["score"]
+    return score
+
+def insert():
+    db = get_db()
+    cur = db.cursor()
+    cur.execute()
 
