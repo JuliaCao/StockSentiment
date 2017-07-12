@@ -12,4 +12,17 @@ $(document).ready(function() {
         $(this).css("background-color", "rgba(255,255,0,0.6)");
       }
     });
+    $("#add-btn").click(function() {
+      $(".input-field").css({"visibility": "visible"});
+    });
+    $("#get-btn").click(function() {
+      var data = $("#ticker").val();
+      if (data !== "") {
+        $.get("/", data, function() {
+          console.log(data);
+        });
+      } else {
+        
+      }
+    });
 });

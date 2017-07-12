@@ -1,3 +1,13 @@
+#ticker {
+  text-transform: uppercase;
+}
+.input-field {
+  visibility: hidden;
+}
+.input-row {
+  margin: 20px 0 10px 10px;
+}
+
 td a {
   display: block;
 }
