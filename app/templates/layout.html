@@ -1,10 +1,48 @@
 <!doctype html>
-<title>Stock Sentiment</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-  <h1>Stock Sentiment</h1>
-  {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+<html>
+  <head>
+    <title>Stock Sentiment</title>
+    <link rel=stylesheet type=text/css href="../static/style.css">
+    <link type="image/x-icon" href="../static/favicon.ico" rel="shortcut icon"/>
+  </head>
+  <body>
+    <div id="header-background">
+      <div id="space">
+      </div>
+      <h1 id="title">
+        Stock Sentiment
+      </h1>
+      <div id="header">
+      </div>
+    </div>
+    <div class="content">
+      <div class="table-responsive-vertical shadow-z-1">
+      <!-- Table starts here -->
+      <table id="table" class="table table-hover table-mc-light-blue">
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Time</th>
+              <th>Article Title</th>
+              <th>Link</th>
+              <th>Sentiment Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for line in x %}
+            <tr id="row-1" style="background-color: ">
+              <td data-title="Ticker">{{line.ticker}}</td>
+              <td data-title="Time">{{line.time}}}}</td>
+              <td data-title="Article Title">{{line.title}}</td>
+              <td data-title="Link">
+                <a href="{{line.link}}" target="_blank">{{line.link}}</a>
+              </td>
+              <td data-title="Sentiment Value">{{line.value}}</td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
