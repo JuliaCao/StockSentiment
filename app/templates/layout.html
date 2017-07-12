@@ -29,7 +29,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for line in x %}
+            {% for line in articles %}
             <tr id="row-1" style="background-color: ">
               <td data-title="Ticker">{{line.ticker}}</td>
               <td data-title="Time">{{line.time}}}}</td>
@@ -37,7 +37,7 @@
               <td data-title="Link">
                 <a href="{{line.link}}" target="_blank">{{line.link}}</a>
               </td>
-              <td data-title="Sentiment Value">{{line.value}}</td>
+              <td data-title="Sentiment Value">{{line.sentiment}}</td>
             </tr>
           </tbody>
           {% endfor %}
