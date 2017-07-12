@@ -30,7 +30,7 @@
           </thead>
           <tbody>
             {% for line in articles %}
-            <tr id="row-1" style="background-color: ">
+            <tr id="row-1" class='clickable-row' data-href='{{line.ticker}}' data.value='{{line.sentiment}}'>
               <td data-title="Ticker">{{line.ticker}}</td>
               <td data-title="Time">{{line.time}}}}</td>
               <td data-title="Article Title">{{line.title}}</td>
@@ -44,5 +44,7 @@
         </table>
       </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../static/main.js"></script>
   </body>
 </html>
