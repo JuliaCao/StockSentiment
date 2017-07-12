@@ -3,19 +3,31 @@
   <head>
     <title>Stock Sentiment</title>
     <link rel=stylesheet type=text/css href="../static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="image/x-icon" href="../static/favicon.ico" rel="shortcut icon"/>
   </head>
   <body>
     <div id="header-background">
       <div id="space">
       </div>
-      <h1 id="title">
+      <h4 id="title">
         Stock Sentiment
-      </h1>
+      </h4>
       <div id="header">
       </div>
     </div>
     <div class="content">
+      <div class="row input-row">
+        <div class="col s1">
+          <a id="add-btn" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="input-field col s4">
+            <input placeholder="AAPL" id="ticker" type="text">
+            <label for="Ticker">Ticker</label>
+            <a class="waves-effect waves-light btn" id="get-btn">Get</a>
+          </div>
+        </div>
       <div class="table-responsive-vertical shadow-z-1">
       <!-- Table starts here -->
       <table id="table" class="table table-hover table-mc-light-blue">
@@ -45,6 +57,7 @@
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
     <script src="../static/main.js"></script>
   </body>
 </html>

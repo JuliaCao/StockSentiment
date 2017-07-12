@@ -40,13 +40,17 @@ class DB(object):
         db.commit()
 
     def get_articles(self, tickers):
+        db = self.get_db()
         articles = []
         for tick in tickers:
+            print tick
             cur = db.cursor()
-            q = "SELECT ticker, time, title, link, sentiment FROM entries WHERE ticker='{}' ORDER BY time DESC LIMIT 1".format(str(tick[0]).decode('utf8'))
+            q = "SELECT ticker, time, title, link, sentiment FROM entries WHERE ticker='{}' ORDER BY time DESC LIMIT 1".format(tick.upper())
+            print q
             cur.execute(q)
             recs = cur.fetchall()
             for rec in recs:
+                print rec
                 articles.append(Article(rec[0],rec[1],rec[2],rec[3],rec[4]))
         return articles
 

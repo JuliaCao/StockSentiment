@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from Article import Article
 from DB import DB
 from Parser import Parser
@@ -15,7 +15,7 @@ parser = Parser(db)
 # Initialize watch list
 watch_list = []
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 def get_watchlist():
     if watch_list:
         art = db.get_articles(watch_list)
@@ -23,6 +23,26 @@ def get_watchlist():
         art = db.get_general_articles()
     print art
     return render_template('layout.html', articles=art)
+
+@app.route("/add/", methods=['POST'])
+def add_ticker():
+    string = request.get_data().split('=')[1]
+    if string:
+        if string == "clear":
+            for t in watch_list:
+                watch_list.remove(t)
+        elif string not in watch_list:
+            watch_list.append(string)
+
+    print watch_list
+
+    if watch_list:
+        art = db.get_articles(watch_list)
+    else:
+        art = db.get_general_articles()
+    print art
+    return render_template('layout.html', articles=art)
+
 
 @app.route("/refresh/<string:strtickers>")
 def refresh_tickers(strtickers):
@@ -37,7 +57,7 @@ def initial_gather():
 
 
 if __name__ == "__main__":
-    initial_gather()
+    # initial_gather()
     app.run(host="0.0.0.0")
 
 
