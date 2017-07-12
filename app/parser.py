@@ -8,6 +8,7 @@ import time
 df = pandas.read_csv('secwiki_tickers.csv')
 
 SEEKING_ALPHA = "https://seekingalpha.com/symbol/{}/news"
+SEEKING_ALPHA_ROOT = "https://seekingalpha.com"
 
 # proxies = {
 #     "http" : "nyc-webproxy.blackrock.com:8080",
@@ -24,6 +25,7 @@ class Article():
         self.ticker = None
         self.sentiment = None
         self.company = None
+        self.date = None
 
     def __str__(self):
         return "Title: {}\nLink: {}\nTime: {}\nTicker: {}\nSentiment: {}\nCompany: {}".format(self.title,self.link,self.time,
@@ -31,30 +33,24 @@ class Article():
 
     def parse_date(self, date):
         l = date.split(",")
-        # d = datetime.datetime()
         if l[0] == "Today":
             d = datetime.datetime.strptime("".join(l[1:]), " %I:%M %p")
             today = datetime.datetime.today()
-            self.date = d.replace(day=int(today.strftime("%d")),year=2017)
-            # d.replace(day=datetime.datetime.today())
+            self.date = d.replace(day=int(today.strftime("%d")), year=2017)
         elif l[0] == "Yesterday":
             d = datetime.datetime.strptime("".join(l[1:]), " %I:%M %p")
             today = datetime.datetime.today() - datetime.timedelta(1)
-            self.date = d.replace(day=int(today.strftime("%d")),year=2017)
+            self.date = d.replace(day=int(today.strftime("%d")), year=2017)
         else:
-            # "Sat, Jul. 8, 9:53 AM"
             self.date = datetime.datetime.strptime(date,"%a, %b. %d, %I:%M %p")
             self.date = self.date.replace(year=2017)
-            # self.date = self.date.to
-            # print(self.date)
 
         self.time = time.mktime(self.date.timetuple())
-        # self.time = self.date
 
     def parse_link(self,bullets):
         div = bullets.find("a", {"class": "market_current_title"})
         self.title = div.text
-        self.link = div["href"]
+        self.link = SEEKING_ALPHA_ROOT + div["href"]
 
     def get_sentiment(self, text):
         self.sentiment = analyze(''.join(text), self.ticker)
@@ -63,10 +59,11 @@ class Article():
         self.ticker = tick
         self.company = list((df[df.Ticker==tick]).Name.values)[0]
 
+
 def get_bullets_for_ticker(tick):
     res = requests.get(SEEKING_ALPHA.format(tick), proxies=proxies)
     if res.status_code != 200:
-        print "Trouble getting articles for {}".format(tick)
+        print("Trouble getting articles for {}".format(tick))
         return []
 
     soup = Soup(res.text, "lxml")
@@ -83,11 +80,13 @@ def get_bullets_for_ticker(tick):
         print(r)
     return results
 
+
 def get_articles(tickers):
     articles = []
     for ticker in tickers:
         articles += get_bullets_for_ticker(ticker)
     return articles
+
 
 if __name__ == "__main__":
     articles = get_articles(["AAPL","FB"])
