@@ -1,3 +1,5 @@
+#! /usr/bin/python2.7
+
 from flask import Flask, render_template, request
 from app.Article import Article
 from app.DB import DB
