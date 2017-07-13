@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
-from Article import Article
-from DB import DB
-from Parser import Parser
+from app.Article import Article
+from app.DB import DB
+from app.Parser import Parser
 
 app = Flask(__name__)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
