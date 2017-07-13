@@ -43,15 +43,15 @@ class DB(object):
         db = self.get_db()
         articles = []
         for tick in tickers:
-            print tick
             cur = db.cursor()
             q = "SELECT ticker, time, title, link, sentiment FROM entries WHERE ticker='{}' ORDER BY time DESC LIMIT 1".format(tick.upper())
-            print q
             cur.execute(q)
             recs = cur.fetchall()
+
             for rec in recs:
-                print rec
-                articles.append(Article(rec[0],rec[1],rec[2],rec[3],rec[4]))
+                d = datetime.datetime.fromtimestamp(int(rec[1])).strftime('%Y-%m-%d %H:%M:%S')
+                sent = float(rec[4]) * 100
+                articles.append(Article(rec[0].upper(),rec[1],rec[2],rec[3],rec[4]))
         return articles
 
     def get_general_articles(self):
@@ -69,12 +69,5 @@ class DB(object):
             for rec in recs:
                 d = datetime.datetime.fromtimestamp(int(rec[1])).strftime('%Y-%m-%d %H:%M:%S')
                 sent = float(rec[4]) * 100
-                articles.append(Article(rec[0],d,rec[2],rec[3],rec[4]))
+                articles.append(Article(rec[0].upper(),d,rec[2],rec[3],rec[4]))
         return articles
-
-
-        # a = Article('AAPL', "1234", "TITLE", "https://google.com", "-.5")
-        # b = Article('AAPL', "1aadf234", "othertitle", "https://google.com", ".5")
-        # c = Article('AAPL', "1234", "TITLE", "https://google.com", "-.75")
-        # d = Article('AAPL', "1aadf234", "othertitle", "https://google.com", "1")
-        # e = Article('AAPL', "1aadf234", "othertitle", "https://google.com", "0")

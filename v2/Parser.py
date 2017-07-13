@@ -33,6 +33,7 @@ class Parser(object):
         self.db=db
 
     def get_bullets_for_ticker(self, tick):
+        print SEEKING_ALPHA.format(tick)
         res = requests.get(SEEKING_ALPHA.format(tick), proxies=proxies, headers=headers)
         if res.status_code != 200:
             print("Trouble getting articles for {}".format(tick))
@@ -62,9 +63,7 @@ class Parser(object):
             articles += self.get_bullets_for_ticker(ticker)
         return articles
 
-
     def analyze(self, content, keyword):
-
         response = self.natural_language_understanding.analyze(
             text=content,
             features=[

@@ -15,6 +15,14 @@ $(document).ready(function() {
     $("#add-btn").click(function() {
       $(".input-field").css({"visibility": "visible"});
     });
+    $("#clear-btn").click(function() {
+        $.get("/clear/", function() {
+//          location.reload();
+            location.replace("http://127.0.0.1:5000/");
+
+            console.log("loading")
+        });
+    });
     $("#get-btn").click(function() {
       var data = $("#ticker").val();
       if (data !== "") {
