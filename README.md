@@ -1,5 +1,7 @@
 # Stock Sentiment
 
+_A Python-based web app designed to give portfolio managers up-to-the minute information about the news articles that affect their holdings. Uses IBM Watson to calculate the sentiment of articles and quickly and accurately displays the information to users using a simple color schema._
+
 ## Created for the 2017 BlackRock Intern Hackathon
 
 ### To Run:
