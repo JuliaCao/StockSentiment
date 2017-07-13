@@ -51,7 +51,7 @@ class DB(object):
             for rec in recs:
                 d = datetime.datetime.fromtimestamp(int(rec[1])).strftime('%Y-%m-%d %H:%M:%S')
                 sent = float(rec[4]) * 100
-                articles.append(Article(rec[0].upper(),rec[1],rec[2],rec[3],rec[4]))
+                articles.append(Article(rec[0].upper(),d,rec[2],rec[3],rec[4]))
         return articles
 
     def get_general_articles(self):
