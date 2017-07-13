@@ -1,3 +1,0 @@
-graft app/templates
-graft app/static
-include app/schema.sql
